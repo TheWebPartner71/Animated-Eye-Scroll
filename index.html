@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <!--
+Eye Scroll
+
+This uses CSS scroll animations,
+which is only supported in Chrome for now.
+
+For a version using Scrollerful,
+a JS & CSS scroll animation library, see:
+https://codepen.io/remino/pen/LYvegRL
+
+-->
+<figure>
+  <div class="eye">
+    <div class="eye__iris"></div>
+  </div>
+  <div class="eye">
+    <div class="eye__iris"></div>
+  </div>
+</figure>
+<ul>
+  <li>0%</li>
+  <li>10%</li>
+  <li>20%</li>
+  <li>30%</li>
+  <li>40%</li>
+  <li>50%</li>
+  <li>60%</li>
+  <li>70%</li>
+  <li>80%</li>
+  <li>90%</li>
+  <li>100%</li>
+</ul>
+<div class="no-support">
+  <p>Sorry, your browsers does not support CSS scroll animations.</p>
+  <p>Try Firefox (with flags) or Chrome.</p>
+  <p>Or the <a href="https://codepen.io/remino/pen/LYvegRL" target="_top">version using Scrollerful</a>.</p>
+</div>   
+</body>
+</html>
+<script>
+    let cancelNextOnScroll = false
+
+const scrollBackIfAtEdge = () => {
+	if (cancelNextOnScroll) {
+		cancelNextOnScroll = false
+		return
+	}
+
+	if (window.scrollY <= 0) {
+		cancelNextOnScroll = true;
+		window.scrollTo(0, document.body.offsetHeight - window.innerHeight);
+		return;
+	}
+
+	if (window.scrollY >= document.body.offsetHeight - window.innerHeight) {
+		cancelNextOnScroll = true;
+		window.scrollTo(0, 0);
+	}
+}
+
+const main = () => {
+	window.addEventListener('scroll', scrollBackIfAtEdge)
+	window.addEventListener('resize', scrollBackIfAtEdge)
+}
+
+if (document.readyState === 'interactive') {
+	main()
+} else {
+	document.addEventListener('DOMContentLoaded', main)
+}
+
+</script>
